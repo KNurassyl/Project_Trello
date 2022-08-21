@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:insert="layout/cdn">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #12455d">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{'/'}" style="font-weight: bold">trello.com</a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{'/'}">All Folders</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{'/'}">Categories</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+
+<div class="container mt-3" layout:fragment="content">
+
+</div>
+
+</body>
+</html>

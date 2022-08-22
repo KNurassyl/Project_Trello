@@ -4,15 +4,41 @@
 
 <div layout:fragment="content">
     <div class="newFolder">
-        <a class="navbar-brand" th:href="@{'#'}">+New Folder</a>
+        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            +New Folder
+        </button>
     </div>
+
+    <form th:action="@{'/addFolder'}" method="post">
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add new folder</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <label class="col-form-label">Folder name:</label>
+                            <input type="text" class="form-control" name="folder_name" placeholder="Folder name" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Add Folder</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <div class="folders">
         <div class="card mt-3" th:each="folder : ${folders}">
             <div class="card-header">
             </div>
             <div class="card-body">
                 <h5 class="card-title" th:text="${folder.name}"></h5>
-                <a th:href="@{'/'}" class="btn btn-primary">Details</a>
+                <a th:href="@{'/folderDetails/'+${folder.id}}" class="btn btn-primary">Details</a>
             </div>
         </div>
     </div>

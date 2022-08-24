@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/taskLayout.html">
+
+<div layout:fragment="content">
+
+    <div class="row">
+        <div class="container col-sm-6 offset-3 mt-3">
+            <form th:action="@{'/editTask'}" method="post">
+                <input type="hidden" name="editedTask_Id" th:value="${task.id}">
+                <div class="mb-3 row">
+                    <label class="form-label">Task title:</label>
+                    <input type="text" class="form-control" name="edited_title" th:value="${task.title}"
+                           th:readonly="${task.status>1}">
+                </div>
+
+                <div class="mb-3 row">
+                    <label class="form-label">Task description:</label>
+                    <textarea class="form-control" name="edited_description" th:text="${task.description}"
+                              th:readonly="${task.status>1}"></textarea>
+                </div>
+
+                <div class="mb-3 row">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" th:value="0"
+                               id="flexRadioDefault1"
+                               th:checked="${task.status==0}">
+                        <label class="form-check-label text-primary fw-bolder" for="flexRadioDefault1">
+                            TO DO
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" th:value="1"
+                               id="flexRadioDefault2"
+                               th:checked="${task.status==1}">
+                        <label class="form-check-label text-warning fw-bolder" for="flexRadioDefault2">
+                            IN TEST
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" th:value="2"
+                               id="flexRadioDefault3"
+                               th:checked="${task.status==2}">
+                        <label class="form-check-label text-success fw-bolder" for="flexRadioDefault1">
+                            DONE
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" th:value="3"
+                               id="flexRadioDefault4"
+                               th:checked="${task.status==3}">
+                        <label class="form-check-label text-danger fw-bolder" for="flexRadioDefault2">
+                            FAILED
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary" style="width: 140px;">Edit</button>
+                    <button type="button" class="btn btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" style="float: right;">
+                        Delete
+                    </button>
+                </div>
+            </form>
+
+            <form th:action="@{'/deleteTask'}" method="post">
+                <input type="hidden" name="deleteId" th:value="${task.id}">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Delete task</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure to delete?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn btn-danger">Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div th:hidden="${task.status > 1}" style="display:contents;">
+            <div class="container col-sm-10 offset-1 mt-3">
+                <hr class="border border-primary border-1 opacity-95">
+
+                <form th:action="@{'/addComment'}" method="post">
+                    <input type="hidden" name="taskId" th:value="${task.id}">
+                    <div class="comments mt-3">
+                        <div class="form-floating">
+                        <textarea name="taskComment" class="form-control" placeholder="Leave a comment here"
+                                  id="floatingTextarea"></textarea>
+                            <label for="floatingTextarea">Comments</label>
+                        </div>
+                        <div class="mt-1" style="float: right;">
+                            <button type="submit" class="btn btn-secondary" style="width: 110px;">Post</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="container col-sm-8 offset-2 mt-3">
+                <div class="card text-bg-light mb-3" th:hidden="${comments.isEmpty()}"
+                     th:each="comment : ${comments}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${comment.comment}"></h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</html>

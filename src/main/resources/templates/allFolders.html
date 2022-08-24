@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/taskLayout.html">
+
+<div layout:fragment="content">
+    <div class="row">
+        <form th:action="@{'/deleteFolder'}" method="post" th:each="folder : ${folders}">
+            <div class="col col-4" style="display: contents">
+                <div class="card text-center text-bg-light mb-3">
+                    <div class="card-header"></div>
+                    <div class="card-body text-dark">
+                        <input type="hidden" name="deleteFolderId" th:value="${folder.id}">
+                        <h5 class="card-title" th:text="${folder.name}"></h5>
+                        <button type="submit" class="btn btn-danger" style="width: fit-content">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</html>

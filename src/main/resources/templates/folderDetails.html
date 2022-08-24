@@ -60,4 +60,70 @@
         </form>
     </div>
 
+    <div class="newTask mt-3">
+        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+            +New Task
+        </button>
+    </div>
+
+    <form th:action="@{'/addTaskToFolder'}" method="post">
+        <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add new task</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="folderId" th:value="${folder.id}">
+                        <div class="container-fluid" style="display: grid">
+                            <label class="col-form-label">Task title:</label>
+                            <label>
+                                <input type="text" class="form-control" name="task_title" placeholder="Task title"
+                                       required>
+                            </label>
+                        </div>
+                        <div class="container-fluid" style="display: grid">
+                            <label class="col-form-label">Task description:</label>
+                            <label>
+                                <textarea class="form-control" name="task_description"
+                                          placeholder="Task description"></textarea>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Add Task</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="container" th:hidden="${folderTasks.isEmpty()}">
+        <table class="table mt-5">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">TASK TITLE</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">DETAILS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="folderTask : ${folderTasks}">
+                <td th:text="${folderTask.id}"></td>
+                <td th:text="${folderTask.title}"></td>
+                <td th:switch="${folderTask.status}">
+                    <span th:case="0" class="text-primary fw-bolder">TO DO</span>
+                    <span th:case="1" class="text-warning fw-bolder">IN TEST</span>
+                    <span th:case="2" class="text-success fw-bolder">DONE</span>
+                    <span th:case="3" class="text-danger fw-bolder">FAILED</span>
+                </td>
+                <td><a th:href="@{'/detailTask/'+${folderTask.id}}" class="btn btn-primary">Details</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>

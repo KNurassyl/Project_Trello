@@ -62,9 +62,10 @@ public class FoldersServiceImpl implements FoldersService {
     }
 
     @Override
-    public void addCategoryToFolder(TaskCategories category, Long folderId) {
+    public String addCategoryToFolder(TaskCategories category, Long folderId) {
         ArrayList<TaskCategories> allTaskCategories = (ArrayList<TaskCategories>) getAllTaskCategories();
         boolean check = false;
+        String text = "";
 
         Folders folder = getFolder(folderId);
 
@@ -73,6 +74,7 @@ public class FoldersServiceImpl implements FoldersService {
                 check = true;
                 category.setId(taskCategory.getId());
                 if (folder.getCategories().contains(category)) {
+                    text = "contains";
                     updateFolder(folder);
                 } else {
                     category.setId(taskCategory.getId());
@@ -88,6 +90,8 @@ public class FoldersServiceImpl implements FoldersService {
             folder.getCategories().add(category);
             updateFolder(folder);
         }
+
+        return text;
 
     }
 

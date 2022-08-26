@@ -77,8 +77,12 @@ public class Main {
         TaskCategories taskCategory = TaskCategories.builder()
                 .name(categoryName)
                 .build();
-        foldersService.addCategoryToFolder(taskCategory, folderId);
-        return "redirect:/folderDetails/" + folderId;
+        String text = foldersService.addCategoryToFolder(taskCategory, folderId);
+        if (text.equals("contains")) {
+            return "redirect:/folderDetails/" + folderId + "?contains";
+        } else {
+            return "redirect:/folderDetails/" + folderId;
+        }
     }
 
     @PostMapping(value = "/deleteCategoryFolder")

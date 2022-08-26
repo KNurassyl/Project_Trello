@@ -17,7 +17,7 @@ public interface FoldersService {
 
     Folders updateFolder(Folders folder);
 
-    void addCategoryToFolder(TaskCategories category, Long folderId);
+    String addCategoryToFolder(TaskCategories category, Long folderId);
 
     void deleteFolder(Long id);
 
